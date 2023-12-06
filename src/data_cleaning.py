@@ -51,13 +51,14 @@ class DataDivideStrategy(DataStrategy):
     """
     Strategy for dividing data into train and test
     """
-    def handle_data(self, data: pd.DataFrame) -> Union([pd.DataFrame, pd.Series]):
+    def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
         try:
             X = data.drop(["review_score"], axis=1)
             y = data["review_score"]
             X_train, X_test, y_train, y_test = train_test_split(
                 X, y, test_size=0.2, random_state=42
             )
+            return X_train, X_test, y_train, y_test
         except Exception as e:
             logging.error("Error in dividing data: {}".format(e))
             raise e
